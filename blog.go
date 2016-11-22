@@ -42,7 +42,7 @@ var funcs = template.FuncMap{
 
 var (
 	ab        = authboss.New()
-	database  = NewMemStorer()
+	database  = NewDBStorer("mysql", "root:pecman123@tcp(127.0.0.1:3306)/chunkedswarm") // NewMemStorer()
 	templates = tpl.Must(tpl.Load("views", "views/partials", "layout.html.tpl", funcs))
 	schemaDec = schema.NewDecoder()
 )
@@ -124,6 +124,7 @@ func main() {
 	//
 	// We store them in base64 in the example to make it easy if we wanted to move them later to
 	// a configuration environment var or file.
+
 	cookieStoreKey, _ := base64.StdEncoding.DecodeString(`NpEPi8pEjKVjLGJ6kYCS+VTCzi6BUuDzU0wrwXyf5uDPArtlofn2AG6aTMiPmN3C909rsEWMNqJqhIVPGP3Exg==`)
 	sessionStoreKey, _ := base64.StdEncoding.DecodeString(`AbfYwmmt8UCwUuhd9qvfNA9UCuN1cVcKJN1ofbiky6xCyyBj20whe40rJa3Su0WOWLWcPpO1taqJdsEI/65+JA==`)
 	cookieStore = securecookie.New(cookieStoreKey, nil)
